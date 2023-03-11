@@ -4,33 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.Map.Entry;
 
-public class MonthlyReport {
+public class MonthlyChampion {
 	
-	MonthlyReport(){
-		
-	}
-	public void monthLessonReport() {
-		/**
-		 * 
-		 * list with all different sessions
-		 * access datalist of attendsession.csv
-		 * list --amount -- rating ++ count
-		 * 
-		 * where count >0
-		 * final_list list-- name,, amount,, avg rating/count-- total attendees
-		 * 
-		 */
-		
-		/**
-		 * during champion report
-		 * access fitness csv file and get all different sessions
-		 * now map 
-		 */
-		CSVOperatins csvoper = new CSVOperatins();
+	public void monthlyChamReport()  {
+	CSVOperatins csvoper = new CSVOperatins();
 		
 		//read input from user-- (month)
 		Scanner sc = new Scanner(System.in);
@@ -80,6 +61,17 @@ public class MonthlyReport {
 			//String replaceData = 
 			fitnessMap.replace(fitness, newValue);
 		}
+		//temp map
+
+		System.out.println("size of mapp is "+fitnessMap.size());
+		HashMap<String, String> fitnessMaptemp= new HashMap<String, String>(fitnessMap) ;
+		HashMap<String, String> newArrMap= new HashMap<String, String>();
+		List<List< String>> newlist= new ArrayList<List< String>>();
+		List< String> newlis2t= new ArrayList< String>();
+
+//		newArrMap.clear();
+		 //
+//		 * var tempMax= 0, key-->
 		System.out.println("<<<<<<<--======Month Lesson Report======-->>>>>>>");
 		System.out.println("-----------------------------------------------------------------");
 		System.out.println("Fitness\t\tTotal Amount\tAverage rating\t   Total Strength");
@@ -91,15 +83,64 @@ public class MonthlyReport {
 			
 		}
 		System.out.println("-----------------------------------------------------------------");
+		
+		int tempMax=0;
+		String key=null,value="";
+		System.out.println("size of mapp is "+fitnessMap.size());
+		int count=fitnessMap.size();
+		 while(count>0) {
+			 for(Entry<String, String> cp:fitnessMap.entrySet()) {
+				// key=cp.getKey();
+				 int arrVal = Integer.valueOf( cp.getValue().split(",")[0]);
+				 if(arrVal>tempMax) {
+					 tempMax=arrVal;
+					 key=cp.getKey();
+					 value=cp.getValue();
+				 }
+				 
+			}
+			 tempMax=0;
+			 System.out.println(" new value is "+ key+"---value"+value);
+			newArrMap.put(key, value);
+			newlis2t.add(key+","+value);
+			/*
+			 * for(Entry<String, String> cp:newArrMap.entrySet()) {
+			 * System.out.println(cp.getKey()+"-"+cp.getValue()); }
+			 */
+			fitnessMap.remove(key);
+			 System.out.println("size of mapp is updated"+fitnessMap.size());
+	//	count--;
+			 count=fitnessMap.size();		
+		 }
+		 
+		 
+		System.out.println("<<<<<<<--======Monthly Champion Report======-->>>>>>>");
+		System.out.println("-----------------------------------------------------------------");
+		System.out.println("Fitness\t\tTotal Amount\tAverage rating\t   Total Strength");
+		System.out.println("-----------------------------------------------------------------");
+		 for(Entry<String, String> cp:newArrMap.entrySet()) {
+			 System.out.println(cp.getKey()+"-"+cp.getValue());
+		 }
+		 System.out.println("listttt");
+		for( String a :newlis2t) {
+			System.out.println(a);
+		}
+		
 		/**
-		 * for uniq lessons
-		 * 	list append-- rating,  count, amount
-		 * 		uniFitName, rating*count, count, amount
 		 * 
-		 * for each lesson
-		 * iterare li<li>
-		 * 		split list and  
+		 * temp map
+		 * 
+		 * var tempMax= 0, key-->
+		 * while(tempMap.length()>0)
+		 * 		iterate list
+		 * 			key=getKey()
+		 * 			arrVal = value.split(",")[amount_field]
+		 * 			if (arrVal>tempMax)
+		 * 			tempMax=arrVal
+		 * 		
+		 * 		tempMap.revome(key)
+		 * 		newMap.put(Key, Val)
+		 * 
 		 */
 	}
-
 }

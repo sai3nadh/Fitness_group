@@ -1,4 +1,4 @@
-package Fitness_Group_V1;
+package fitness_Group_V1;
 
 public class Report {
 
