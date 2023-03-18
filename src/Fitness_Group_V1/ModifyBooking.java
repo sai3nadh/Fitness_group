@@ -21,7 +21,7 @@ public class ModifyBooking {
 	ModifyBooking(){
 		
 	}
-	String csvFile="C:\\Users\\HP\\Desktop\\sample.csv";
+	String csvFile="sample.csv";
 	Scanner sc= new Scanner(System.in);
 	
 	public boolean cancelBooking() throws IOException {
@@ -84,7 +84,7 @@ public class ModifyBooking {
 		
 			// cancel class
 		// show available sessions to change booking-- new class
-		String classesCSVFile="C:\\Users\\HP\\Desktop\\fitness_classes.csv";
+		String classesCSVFile="fitness_classes.csv";
 		List<String> ClassesList = csvoper.getClassRecords(",", classesCSVFile);
 		System.out.println("\n\nAvailable Classess sessions on customer booking");
 		for (String clist : ClassesList)
@@ -108,7 +108,7 @@ public class ModifyBooking {
 		}
 		
 		// confirm booking
-		String filepath = "C:\\Users\\HP\\Desktop\\sampletest.csv";
+		String filepath = "sampletest.csv";
 //		csvoper.putRecord(filepath, record);
 		int count=1;
 		//update timetable
@@ -162,7 +162,7 @@ public class ModifyBooking {
 		}
 
 		public boolean attendSession(String bookingID, String bookingData) throws IOException {
-			String path="C:\\Users\\HP\\Desktop\\attendSession.csv";
+			String path="attendSession.csv";
 			BufferedWriter bw=new BufferedWriter(new FileWriter(path, true));
 	       System.out.println("bookingdata is "+bookingData); 
 		    String []enrollDataArr= bookingData.split(",");
@@ -181,7 +181,7 @@ public class ModifyBooking {
 		}
 		
 		public boolean isEnrolled(String FitnessID, String CustomerID) {
-			String fileLocation  = "C:\\Users\\HP\\Desktop\\sample.csv";//"C:\\Users\\HP\\Desktop\\fitness_classes.csv";;
+			String fileLocation  = "sample.csv";//"fitness_classes.csv";;
 			System.out.println("avaiable bookings");
 			try (
 					BufferedReader br = new BufferedReader(new FileReader(fileLocation))) {
@@ -200,7 +200,7 @@ public class ModifyBooking {
 			return false;
 		}
 		public int getEnrollCount(String FitnessID) {
-			String fileLocation  = "C:\\Users\\HP\\Desktop\\fitness_classes.csv";;
+			String fileLocation  = "fitness_classes.csv";;
 			//List<String> recordsList= new ArrayList<String>();
 			System.out.println("avaiable bookings");
 			try (// show available bookings
@@ -231,7 +231,7 @@ public class ModifyBooking {
 			int count =0;
 				System.out.println("finding record ID in bookings");
 				try (// show available bookings
-						//BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\HP\\Desktop\\sample.csv"))) {
+						//BufferedReader br = new BufferedReader(new FileReader("sample.csv"))) {
 					BufferedReader br = new BufferedReader(new FileReader(fileLocation))) {
 								
 					String line;
@@ -374,9 +374,9 @@ public class ModifyBooking {
 		}
 		
 		public boolean updaterecord(String FitnessID, int count) {
-			String filepath="C:\\Users\\HP\\Desktop\\fittemp2.csv";
+			String filepath="fittemp2.csv";
 			//timetable path to update booking count
-			String timetable = "C:\\Users\\HP\\Desktop\\fitness_classes.csv";
+			String timetable = "fitness_classes.csv";
 			File oldfile = new File(timetable);
 			File tempfile= new File(filepath);
 			try {
@@ -437,9 +437,9 @@ public class ModifyBooking {
 		}
 		
 		public boolean updateAttendStatus(String BookingID) {
-			String filepath="C:\\Users\\HP\\Desktop\\custTblTemp.csv";
+			String filepath="custTblTemp.csv";
 			//timetable path to update booking count
-			String custTable = "C:\\Users\\HP\\Desktop\\sample.csv"; //"C:\\Users\\HP\\Desktop\\fitness_classes.csv";
+			String custTable = "sample.csv"; //"fitness_classes.csv";
 			File oldfile = new File(custTable);
 			File tempfile= new File(filepath);
 			try {
@@ -499,7 +499,7 @@ public class ModifyBooking {
 		}
 		
 		public boolean enrollCustomer(String bookingInfo,String CustomerID, String ClassID, int count, String enrollData) throws IOException {
-			String path="C:\\Users\\HP\\Desktop\\sample.csv";
+			String path="sample.csv";
 			BufferedWriter bw=new BufferedWriter(new FileWriter(path, true));
 	        // bw.write("S.no,Name,Fitness_Type,Price"); // table heading
 			// construct string with all values
@@ -524,7 +524,8 @@ public class ModifyBooking {
 			// TODO Auto-generated method stub
 			List<String> recordsList= new ArrayList<String>();
 			System.out.println("avaiable bookings");
-			String fileLocation="C:\\Users\\HP\\Desktop\\attendSession.csv";
+//			String fileLocation="attendSession.csv";
+			String fileLocation="attendSession.csv";
 			try (// show available bookings
 					BufferedReader br = new BufferedReader(new FileReader(fileLocation))) {
 					String line,checkMonth[];
