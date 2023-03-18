@@ -9,7 +9,7 @@ public class AttendSession {
 	AttendSession(){
 	}
 	
-	public static boolean bookASession() {
+	public boolean bookASession() {
 		/***
 		 * customer ID
 		 * check available classes

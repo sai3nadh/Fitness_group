@@ -36,7 +36,10 @@ public class MonthlyReport {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("enter month");
 		int month = sc.nextInt();
-		
+		while (month<1 || month>12) {
+			System.out.println("enter valid month");
+			month = sc.nextInt();
+		}
 		List<String> monthRecords = csvoper.getMonthRecords(month);
 		List<String> uniFitness = new ArrayList<String>();
 		

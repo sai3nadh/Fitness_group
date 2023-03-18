@@ -63,14 +63,14 @@ public class ModifyBooking {
 		System.out.println("canelling the booking ");
 		return true;
 	}
-	public boolean changeBooking(int from , int to ) throws IOException {
+	public boolean changeBooking(String custID) throws IOException {
 		System.out.println("the session has been rescheduled successfuly");
 		// reschedule session
 		// check available session on particular candidate
 		System.out.println("**********************");
 		System.out.println("**********************");
-		System.out.println("please enter customerID");
-		String customerID= sc.next();
+//		System.out.println("please enter customerID");
+		String customerID= custID;//sc.next();
 		
 		CSVOperatins csvoper = new CSVOperatins();
 		// call method and get records with particular customer ID
@@ -123,7 +123,7 @@ public class ModifyBooking {
 		}
 		if(enroll_count<5) {
 			System.out.println("update time table.. with count value increased by one");
-			//csvoper.updaterecord(chooseClass,count);
+			csvoper.updaterecord(chooseClass,count);
 		}
 		else {
 			System.out.println("class is already full... please ");
@@ -138,7 +138,7 @@ public class ModifyBooking {
 	}
 }
 	 class CSVOperatins{
-		public List<String> getRecords(String BookingID, String splitBy, String fileLocation) {
+		public List<String> getRecords(String custID, String splitBy, String fileLocation) {
 			
 			List<String> recordsList= new ArrayList<String>();
 			System.out.println("avaiable bookings");
@@ -148,7 +148,7 @@ public class ModifyBooking {
 					while ((line = br.readLine()) != null) {   //returns a Boolean value  
 						String[] Prices = line.split(splitBy);    // use comma as separator  
 						if(Prices.length>0) { // to skip the empty record
-							if(BookingID.equals(Prices[0])) {
+							if(custID.equals(Prices[1])) {
 								recordsList.add(line);
 								System.out.println(" " + Prices[0] + "\t\t" + Prices[1] +"count value");//+count); 
 							}
@@ -188,7 +188,7 @@ public class ModifyBooking {
 					String line,FitID[];
 					while ((line = br.readLine()) != null) {   //returns a Boolean value  
 						FitID=line.split(",");
-						if (FitID[2].equals(FitnessID) && FitID[0].equals(CustomerID)) {
+						if (FitID[2].equals(FitnessID) && FitID[1].equals(CustomerID)) {
 						return true;// returns true if user is already enrolled in class
 						}	
 					}
@@ -267,7 +267,60 @@ public class ModifyBooking {
 			}
 			return recordsList;
 		}
+
+		public List<String> getRecordsByMonth( String splitBy, String fileLocation, String Month) {
 			
+			List<String> recordsList= new ArrayList<String>();
+			System.out.println("avaiable bookings");
+			try (// show available bookings
+					BufferedReader br = new BufferedReader(new FileReader(fileLocation))) {
+					String line;
+					while ((line = br.readLine()) != null) {   //returns a Boolean value  
+						/*
+						 * // append all records to list recordsList.add(line);
+						 */
+						String checkMonth= line.split(",")[5];
+//						System.out.println("compare months:"+checkMonth+"-"+Month);
+						if(checkMonth.equals(Month)) {
+							// append all records to list
+							recordsList.add(line);
+							
+						}
+					}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			return recordsList;
+		}
+
+		public List<String> getRecordsByFitness( String splitBy, String fileLocation, String Fitness) {
+			
+			List<String> recordsList= new ArrayList<String>();
+			System.out.println("avaiable bookings");
+			try (// show available bookings
+					BufferedReader br = new BufferedReader(new FileReader(fileLocation))) {
+					String line;
+					while ((line = br.readLine()) != null) {   //returns a Boolean value  
+						/*
+						 * // append all records to list recordsList.add(line);
+						 */
+						String checkFitness= line.split(",")[1];
+//						System.out.println("compare months:"+checkMonth+"-"+Month);
+						if(checkFitness.equalsIgnoreCase(Fitness)) {
+							// append all records to list
+							recordsList.add(line);
+							
+						}
+					}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			return recordsList;
+		}
+
+		
 		public int deleteRow( String splitBy,  String csvFile, int deleteLine) {
 			//String line = "";
 			String filepath="temp.csv";
@@ -458,7 +511,7 @@ public class ModifyBooking {
 			//		22	2	1	Vooiking ID	342	3445	booked	
 			// BookingID+","+CustomerID + "," + ClassID + "," + timings + count + amount
 		    String []enrollDataArr= enrollData.split(",");
-			String append= BookingID +","+ CustomerID+","+ClassID +","+enrollDataArr[1]+","+count + ","+enrollDataArr[2]+",booked,"+enrollDataArr[0];
+			String append= BookingID +","+ CustomerID+","+ClassID +","+(enrollDataArr[1].replaceAll("pm", "")).replaceAll("am", "")+","+count + ","+enrollDataArr[2]+",booked,"+enrollDataArr[0]+"\n";
 			System.out.println("appned string is-->>>"+append);
 	        bw.write(append);
 			bw.close();
