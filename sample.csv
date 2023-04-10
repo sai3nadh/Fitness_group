@@ -1,12 +1,12 @@
 bookingID,CustomerID,classID,month,booking_count,amount,status,class name
 22,C001,1,3,342,3445,booked,yoga
-1,C002,2,3,24,3445,booked,dance
-33,C003,3,2,23,3445,booked,zumba
+1,C002,2,3,24,3445,modified,dance
+33,C003,3,2,23,3445,attended,zumba
 5,C004,4,2,4,3445,booked,boxing
 8,C005,5,1,234,3445,attended,swimming
 44,C006,6,1,23,3445,booked,kungfu
 3,C007,7,1,23,3445,booked,running
-1,C008,8,6,4,3445,booked,yoga
+1,C008,8,6,4,3445,modified,yoga
 3,C009,9,6,23,3445,booked,dance
 3,C010,10,7,4,3445,booked,zumba
 6,C011,11,9,23,3445,booked,zumba
@@ -17,3 +17,9 @@ bookingID,CustomerID,classID,month,booking_count,amount,status,class name
 230312224550,C004,6,18,2,250,booked,boxing
 230312224557,C004,6,18,3,250,booked,boxing
 230318101140,C009,17,8,1,360,booked,Yoga
+404230642,C006,12,26,1,310,booked,Dance
+404231849,C002,14,1,1,330,booked,GYM
+404232035,C002,9,25,1,280,booked,Zumba
+405192416,C003,9,25,4,280,booked,Zumba
+40519443,C008,13,1,3,320,booked,Zumba
+407090534,C005,12,26,4,310,booked,Dance

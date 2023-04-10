@@ -32,6 +32,20 @@ public class GroupFitness {
 			 * 
 			 */
 			
+			/*
+			 * SimpleDateFormat dateFormat = new SimpleDateFormat("MddHHmms");
+			 * System.out.println(dateFormat.format(new Date()));
+			 */
+		    
+			System.out.println("Enter User ID");
+			String custID= operation.next();
+			System.out.println("is valid"+cinfo.isCustValid(custID));
+			while(!cinfo.isCustValid(custID)) {
+				System.out.println("Enter Valid Customer ID");
+				custID= operation.next();
+				System.out.println("is valid"+cinfo.isCustValid(custID));
+
+			}
 			// the main functionalities 
 			System.out.println("*******************************************");
 			System.out.println("1) Book a Group Session ");
@@ -43,16 +57,6 @@ public class GroupFitness {
 			System.out.println("*******************************************");
 			System.out.println(" Choose the operation to perform ");
 
-			System.out.println("Enter User ID");
-			String custID= operation.next();
-			System.out.println("is valid"+cinfo.isCustValid(custID));
-			while(!cinfo.isCustValid(custID)) {
-				System.out.println("Enter Valid Customer ID");
-				custID= operation.next();
-				System.out.println("is valid"+cinfo.isCustValid(custID));
-
-			}
-			
 			System.out.println(" Choose the operation to perform ");
 			System.out.println("ENter Operation ID:");
 			// read the operation to perform  

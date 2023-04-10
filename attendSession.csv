@@ -16,3 +16,4 @@ BookingID,class_name,amount,review,rating,status,month,count
 2524,dance,310,good,3,attended,3,1
 42,zumba,320,good,4,attended,3,1
 1313,boxing,330,good,5,attended,3,1
+33,zumba,3445,good,5,attended,3,4
