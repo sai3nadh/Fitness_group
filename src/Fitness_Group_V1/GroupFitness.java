@@ -37,15 +37,15 @@ public class GroupFitness {
 			 * System.out.println(dateFormat.format(new Date()));
 			 */
 		    
-			System.out.println("Enter User ID");
-			String custID= operation.next();
-			System.out.println("is valid"+cinfo.isCustValid(custID));
-			while(!cinfo.isCustValid(custID)) {
-				System.out.println("Enter Valid Customer ID");
-				custID= operation.next();
-				System.out.println("is valid"+cinfo.isCustValid(custID));
-
-			}
+			/*
+			 * System.out.println("Enter User ID: "); String custID= operation.next();
+			 * System.out.println("is valid"+cinfo.isCustValid(custID));
+			 * while(!cinfo.isCustValid(custID)) {
+			 * System.out.println("Enter Valid Customer ID"); custID= operation.next();
+			 * System.out.println("is valid"+cinfo.isCustValid(custID));
+			 * 
+			 * }
+			 */
 			// the main functionalities 
 			System.out.println("*******************************************");
 			System.out.println("1) Book a Group Session ");
@@ -66,13 +66,19 @@ public class GroupFitness {
 				switch (option) {
 				case 1: 
 					System.out.println("call the book a group session funciton or class");
-					System.out.println(gs.bookASession(custID));
+					System.out.println(gs.bookASession());
 					break;
 				case 2: 
-					System.out.println("call the Change \\ Cancel a Session");
-					System.out.println(mb.changeBooking(custID));
-					//skipping cancel for testing purpose
-					//System.out.println(mb.cancelBooking());
+					
+					System.out.println("1-Change Booking \n2-Cancel booking\n"
+							+ "Choose option to perform");
+					int op = operation.nextInt();
+					if(op==1) {
+						System.out.println(mb.changeBooking());
+					}//skipping cancel for testing purpose
+					else if(op==2) {
+						mb.cancelBooking();
+					}
 					break;
 				case 3: 
 					System.out.println("call Attend a Lession");
@@ -93,6 +99,15 @@ public class GroupFitness {
 				}
 				if (option!=6) {
 					System.out.println("entered to main menu please choose option");
+					System.out.println("*******************************************");
+					System.out.println("1) Book a Group Session ");
+					System.out.println("2) Change / Cancel a Session ");
+					System.out.println("3) Attend a Lession  ");
+					System.out.println("4) Monthly Lession Report ");
+					System.out.println("5) Monthly Chapion Fitness Report ");
+					System.out.println("6 Exit System");
+					System.out.println("*******************************************");
+					System.out.println(" Choose the operation to perform ");
 					option =operation.nextInt();
 				}
 			}

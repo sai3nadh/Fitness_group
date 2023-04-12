@@ -37,7 +37,7 @@ public class MonthlyReport {
 		System.out.println("enter month");
 		int month = sc.nextInt();
 		while (month<1 || month>12) {
-			System.out.println("enter valid month");
+			System.out.println("enter valid month (range between: 1 to 12)");
 			month = sc.nextInt();
 		}
 		List<String> monthRecords = csvoper.getMonthRecords(month);

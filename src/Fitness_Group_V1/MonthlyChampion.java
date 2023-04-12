@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 
 public class MonthlyChampion {
 	
-	public void monthlyChamReport()  {
+	public boolean monthlyChamReport()  {
 	CSVOperatins csvoper = new CSVOperatins();
 		
 		//read input from user-- (month)
@@ -101,7 +101,7 @@ public class MonthlyChampion {
 		}
 		System.out.println("-----------------------------------------------------------------");
 		
-		
+		return true;
 		/**
 		 * 
 		 * temp map

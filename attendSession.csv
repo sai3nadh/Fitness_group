@@ -17,3 +17,8 @@ BookingID,class_name,amount,review,rating,status,month,count
 42,zumba,320,good,4,attended,3,1
 1313,boxing,330,good,5,attended,3,1
 33,zumba,3445,good,5,attended,3,4
+3,running,3445,goood,5,attended,7,1
+5,boxing,3445,good,4,attended,2,4
+230312224557,boxing,250,good,4,attended,18,3
+405192416,Zumba,280,enjoyed,1,attended,25,4
+407090534,Dance,310,good enjoued looking for more,1,attended,26,4

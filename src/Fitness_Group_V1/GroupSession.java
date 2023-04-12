@@ -9,7 +9,7 @@ public class GroupSession {
 	
 	GroupSession(){	
 	}
-	public boolean bookASession(String CustID) {
+	public boolean bookASession() {
 		Scanner read = new Scanner(System.in);
 		String line = "";  
 		String splitBy = ",";
@@ -42,7 +42,18 @@ public class GroupSession {
 		 * 		get all available lessons
 		 * 
 		 */
-		System.out.println("enter date MM/DD/YYYY");
+		System.out.println("Enter Customer ID: ");
+		String custID= read.next();
+		CustomerInfo cinfo= new CustomerInfo();
+		System.out.println("is valid"+cinfo.isCustValid(custID));
+		while(!cinfo.isCustValid(custID)) {
+			System.out.println("You have entered incorrect Customer ID");
+			System.out.println("Enter Valid Customer ID Again");
+			custID= read.next();
+			System.out.println("is valid"+cinfo.isCustValid(custID));
+
+		}
+		//System.out.println("enter date MM/DD/YYYY");
 //		SimpleDateFormat dateInput = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat dateInput = new SimpleDateFormat("MM/dd/yyyy");
 		Scanner input = new Scanner(System.in);
@@ -132,7 +143,7 @@ public class GroupSession {
 		
 		
 //		System.out.println("enter customer ID");
-		String CustomerID = CustID;// read.next();
+		String CustomerID = custID;// read.next();
 		
 		
 		System.out.println("enter Class ID to join ");
@@ -170,6 +181,7 @@ public class GroupSession {
 				}
 			}else {
 				System.out.println("Don't have enough seats to register");
+				return false;
 			}
 			
 		}else {
