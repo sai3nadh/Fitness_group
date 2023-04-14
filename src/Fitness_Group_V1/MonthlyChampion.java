@@ -15,10 +15,10 @@ public class MonthlyChampion {
 		
 		//read input from user-- (month)
 		Scanner sc = new Scanner(System.in);
-		System.out.println("enter month");
+		System.out.println("enter month(range: 1 to 12)");
 		int month = sc.nextInt();
 		while (month<1 || month>12) {
-			System.out.println("enter valid month");
+			System.out.println("enter valid month(range: 1 to 12)");
 			month = sc.nextInt();
 		}
 	
@@ -65,7 +65,6 @@ public class MonthlyChampion {
 		}
 
 
-		System.out.println("size of mapp is "+fitnessMap.size());
 		List< String> newlis2t= new ArrayList< String>();
 		int tempMax=0;
 		String key=null,value="";

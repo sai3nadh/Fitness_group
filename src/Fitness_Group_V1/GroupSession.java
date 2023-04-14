@@ -53,8 +53,7 @@ public class GroupSession {
 			System.out.println("is valid"+cinfo.isCustValid(custID));
 
 		}
-		//System.out.println("enter date MM/DD/YYYY");
-//		SimpleDateFormat dateInput = new SimpleDateFormat("yyyy-MM-dd");
+
 		SimpleDateFormat dateInput = new SimpleDateFormat("MM/dd/yyyy");
 		Scanner input = new Scanner(System.in);
 
@@ -170,10 +169,7 @@ public class GroupSession {
 			int count = read.nextInt();
 			if ((enrollcount+count)<=5) {
 				
-				String bookingInfo="";
-				System.out.println("enrolllll customerrrrr steppp!!!!!");
 				try {
-					System.out.println("enroll data-->"+enrollData);
 					csvoper.enrollCustomer( CustomerID, classID, count, enrollData);
 					csvoper.updaterecord(classID, count);
 				} catch (Exception e) {
@@ -186,9 +182,10 @@ public class GroupSession {
 			
 		}else {
 			System.out.println("Already you have enrolled for this class");
+			return false;
 		}
 		
-		System.out.println(System.lineSeparator()+"The Session is Booked Successfully");
+		System.out.println("The Session is Booked Successfully!!!");
 		
 		return true;
 	}

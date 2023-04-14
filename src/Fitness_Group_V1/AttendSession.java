@@ -9,7 +9,7 @@ public class AttendSession {
 	AttendSession(){
 	}
 	
-	public boolean bookASession() {
+	public boolean attendASession() {
 		/***
 		 * customer ID
 		 * check available classes
@@ -47,12 +47,13 @@ public class AttendSession {
 		{
 
 			if(custData.split(",")[6].equals("booked")) {
-				//System.out.println("custData Values values"+custData);
+				System.out.println("custData Values values"+custData);
 				System.out.println(custData.split(",")[0]+"\t\t"+custData.split(",")[7]);
 				count++;
 			}
 		}
 		System.out.println("=================================");
+		// return to main menu if you don't have any existing classes
 		if(count==0) {
 			System.out.println("You don't have any classes to attend");
 			return false;
@@ -65,16 +66,11 @@ public class AttendSession {
 			System.out.println("custtttdataa"+custData);
 			compare= custData.split(",");
 			if (compare[0].equals(BookingID)) {
-			//System.out.println("custData Values values"+custData);
 				custDataArr=custData.split(",");
 				break;// element found
 			}
 		}
-		//System.out.println("custDataArrrrr-->"+custDataArr.toString());
-		//System.out.println("valuess in stringggggg");
-		/*
-		 * for (String s:custDataArr) { System.out.println(s); }
-		 */
+
 		System.out.println("enter Session Rating rangin 1 - 5");
 		int Rating = sc.nextInt();
 		System.out.println("enter review for the session");
@@ -89,11 +85,14 @@ public class AttendSession {
 		String attendData = String.valueOf(Rating)+"," +review+","+
 		 custDataArr[0]+","+custDataArr[1]+","+custDataArr[2]+","
 				 +custDataArr[3]+","+custDataArr[6]+","+custDataArr[7];
-		//System.out.println("Attendddd Data is---"+attendData);
-		attendData =  custDataArr[7] +","+ custDataArr[5]+","+review+","+ Rating+","+"attended"
-						+","+custDataArr[3]+","+custDataArr[4];
 		
-		//System.out.println("attendData is "+ attendData);
+		attendData =  custDataArr[7] +","+ custDataArr[5]+","+review+","+ Rating+","+"attended"
+						+","+custDataArr[3]+","+custDataArr[4]+","+custDataArr[8];
+		
+
+		System.out.println("attend data string:"+attendData);
+		System.out.println("pauseeee");
+		a= sc.nextInt();
 		try {
 			csvoper.updateAttendStatus(BookingID);
 			csvoper.attendSession(BookingID, attendData);
@@ -101,8 +100,9 @@ public class AttendSession {
 			//BookingID	class_name	amount	review	rating	status
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
+			return false;
 		}
 		
 		System.out.println("Attend a session is successful ");

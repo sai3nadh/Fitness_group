@@ -24,7 +24,7 @@ public class TestClass {
 	public void BookClass() {
 		System.out.println("Testing Booking a class method");
 		GroupSession gs =new GroupSession();
-		//C005 - 2 - zumba - 13 - 4
+		//C005 - 2 - zumba - 13 - 4 -- negative 
 		Boolean b =gs.bookASession();
 		assertEquals(b,false);
 	}

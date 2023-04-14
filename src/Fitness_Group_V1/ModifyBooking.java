@@ -14,8 +14,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-//import org.w3c.dom.css.CSSValue;
-
 public class ModifyBooking {
 
 	ModifyBooking(){
@@ -25,9 +23,6 @@ public class ModifyBooking {
 	Scanner sc= new Scanner(System.in);
 	
 	public boolean cancelBooking() throws IOException {
-//		String line = "";  
-//		String splitBy = ",";
-		//ask for his id
 		Scanner read= new Scanner(System.in);
 		System.out.println("Enter Customer ID");
 		String custID= read.next();
@@ -39,21 +34,17 @@ public class ModifyBooking {
 			System.out.println("is valid"+cinfo.isCustValid(custID));
 
 		}
-		//System.out.println("enter booking ID");
-		String customerID= custID;//sc.next();
+
+		String customerID= custID;
 			
 				try {
 				
 					System.out.println("**********************");
 					System.out.println("**********************");
-					System.out.println("avaiable bookings");
-//					System.out.println("please enter customerID");
-					
 					CSVOperatins csvoper = new CSVOperatins();
 					// call method and get records with particular customer ID
 					List<String> testList = csvoper.getRecords(customerID, ",", csvFile);
 					
-
 					System.out.println("available sessions on customer booking");
 					System.out.println("================================");
 					
@@ -71,6 +62,7 @@ public class ModifyBooking {
 						count++;
 						}
 					}
+					
 					System.out.println("================================");
 					
 					// take  user input --> class id
@@ -80,38 +72,41 @@ public class ModifyBooking {
 					}
 					System.out.println("enter Fitness ID ");
 					String cancel_id=sc.next();
+					
+					// to get the existing count 
+					for (String add : testList)
+					{
+						//System.out.println(add);
+						// 
+						if(add.split(",")[0].equals(cancel_id)) {
+							count = -Integer.valueOf( add.split(",")[4]);
+							break;
+						}
+					}
+					System.out.println("count value is -->"+count);
+					count = 5+count;
+					System.out.println("count value is -->"+count);
+					
 					boolean cancel=csvoper.updateCancelStatus(cancel_id);
 					if(cancel) {
+						//update count in fitness classes
+						
+						csvoper.updaterecord(cancel_id, count);
 						System.out.println("Cancellation Successful");
 					}
 					else {
 						System.out.println("Failed Cancellation");
+						return false;
 					}
-						// cancel class
-					
-					//======================
-					/*
-					 * System.out.println("**********************");
-					 * System.out.println("**********************"); CSVOperatins csvoper = new
-					 * CSVOperatins(); // call method and get records with particular customer ID
-					 * List<String> testList = csvoper.getRecords(customerID, ",", csvFile); for
-					 * (String add : testList) { System.out.println("inside values"+add); } int
-					 * deleteLine = csvoper.getRecordID(customerID, ",", csvFile);
-					 * System.out.println("executed getRecordID"+deleteLine); //calling deleteRow
-					 * method System.out.println("calling deleteRow method"); int deleteStatus=
-					 * csvoper.deleteRow( ",", csvFile, deleteLine); if (deleteStatus== 1) {
-					 * System.out.println("cancellation Successful"); }
-					 */
 				}
 				catch(Exception e) {
 					e.printStackTrace();
 					return false;
 				}
-			//System.out.println("enter ID or enter X to terminate");
-			//customerID=sc.next();
+
 			
 		
-		System.out.println("canelling the booking ");
+		System.out.println("Cancelled Class Successfully!!!");
 		return true;
 	}
 	public boolean changeBooking() throws IOException {
@@ -158,20 +153,31 @@ public class ModifyBooking {
 		// call method and get records with particular customer ID
 		List<String> testList = csvoper.getRecords(customerID, ",", csvFile);
 		System.out.println("available sessions on customer booking");
-		System.out.println("fitID\t type\t status");
+		System.out.println("------------------------------------------");
+		System.out.println("fitID\t\t type\t status");
+		System.out.println("------------------------------------------");		
 		for (String add : testList)
 		{
-			//System.out.println(add);
-			// 
-			if(!add.split(",")[6].equals("attended")) {
+			
+			if(add.split(",")[6].equals("booked")) {
 				System.out.println(add.split(",")[0]+"\t"+
 									add.split(",")[7]+"\t"+
 									add.split(",")[6]);
 			}
 		}
+		System.out.println("------------------------------------------");
 		// take  user input --> class id
 		System.out.println("enter Fitness ID ");
-		int change_id=sc.nextInt();
+		String change_id=sc.next();
+		int updt_count=0;
+		for (String add : testList)
+		{
+			
+			if(add.split(",")[0].equals(change_id)) {
+				updt_count = -Integer.valueOf(add.split(",")[4]);
+				break;
+			}
+		}
 			// cancel class
 		// show available sessions to change booking-- new class
 		String classesCSVFile="fitness_classes.csv";
@@ -182,7 +188,6 @@ public class ModifyBooking {
 			System.out.println(clist);
 		}
 		// ask for customer to choose class
-		System.out.println("adding new class to file");
 		System.out.println("enter your classID to join");
 		String chooseClass= sc.next();
 		//get class corresponding row to append
@@ -194,19 +199,17 @@ public class ModifyBooking {
 				record= clist;
 				break;
 			}
-			//System.out.println(clist);
+		
 		}
 		
-		// confirm booking
-		String filepath = "sampletest.csv";
-//		csvoper.putRecord(filepath, record);
 		int count=1;
 		//update timetable
-		System.out.println("validate if it has count to 5");
+		//validate if it has count to 5
 		int enroll_count= csvoper.getEnrollCount(chooseClass);
-		System.out.println("validate if he is already enrolled in same class");
+		//validate if he is already enrolled in same class
 		if (csvoper.isEnrolled(chooseClass, customerID)) {
-			System.out.println("already enrolled");
+			System.out.println("Alread you enrolled for this class..");
+			return false;
 		}
 		else {
 			System.out.println("Not Enrolleddd");
@@ -221,9 +224,11 @@ public class ModifyBooking {
 				//1,Yoga,11am,1,400,3/11/2023===> Yoga,11am,400
 				String enrollData=record.split(",")[1]+","+record.split(",")[2]+","+record.split(",")[4]+","+record.split(",")[5];
 				csvoper.enrollCustomer( custID, chooseClass, count, enrollData);
+				csvoper.updaterecord(change_id, updt_count);
 			}
 			else {
-				System.out.println("class is already full... please ");
+				System.out.println("class is already full... please Choose different Class ");
+				return false;
 			}
 		}
 		
@@ -263,7 +268,8 @@ public class ModifyBooking {
 			String append= bookingID +","+enrollDataArr[0]+","
 							+enrollDataArr[1]+","+enrollDataArr[2]+","
 							+enrollDataArr[3]+","+enrollDataArr[4]+","
-							+enrollDataArr[5]+","+enrollDataArr[6]+
+							+enrollDataArr[5]+","+enrollDataArr[6]+","+
+							enrollDataArr[7]+
 							"\n";
 									
 			//BookingID	class_name	amount	review	rating	status
@@ -294,10 +300,10 @@ public class ModifyBooking {
 			
 			return false;
 		}
+		
+		//to get the count of already enrolled customers
 		public int getEnrollCount(String FitnessID) {
 			String fileLocation  = "fitness_classes.csv";;
-			//List<String> recordsList= new ArrayList<String>();
-			System.out.println("avaiable bookings");
 			try (// show available bookings
 					BufferedReader br = new BufferedReader(new FileReader(fileLocation))) {
 					String line,FitID[];
@@ -311,9 +317,7 @@ public class ModifyBooking {
 						
 						if (FitID[0].equals(FitnessID)) {
 						return Integer.valueOf(FitID[3]);
-						}					
-							
-						//recordsList.add(line);
+						}	
 					}
 			}
 			catch(Exception e) {
@@ -321,6 +325,8 @@ public class ModifyBooking {
 			}
 			return 0;
 		}
+
+		
 		public int getRecordID(String BookingID, String splitBy,  String fileLocation) {
 			
 			int count =0;
@@ -415,57 +421,39 @@ public class ModifyBooking {
 		}
 
 		
-		public int deleteRow( String splitBy,  String csvFile, int deleteLine) {
-			//String line = "";
-			String filepath="temp.csv";
-			File oldfile = new File(csvFile);
-			File tempfile= new File(filepath);
-			try {
-				FileWriter fw= new FileWriter(tempfile,true);
-				BufferedWriter bw= new BufferedWriter(fw);
-				PrintWriter pw= new PrintWriter(bw);
-				
-				FileReader fr = new FileReader(csvFile);
-				BufferedReader br= new BufferedReader(fr);
-				int line=0;
-				String Currentline;
-				while ((Currentline = br.readLine()) != null) {
-					
-					line++;
-					
-					if (deleteLine != line) {
-						pw.println(Currentline);
-					}
-				}
-				
-				pw.flush();
-				pw.close();
-				fr.close();
-				br.close();
-				fw.close();
-				bw.close();
-				
-				  oldfile.delete(); File dump= new File(csvFile); tempfile.renameTo(dump);
-				  
-				System.out.println("deletion ends");
-				System.out.println("**********************");
-				return 1;
-				
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-			}
-			return 0;
-			
-		}
-		
-		public boolean putRecord(String path, String chooseClass) throws IOException {
-			BufferedWriter bw=new BufferedWriter(new FileWriter(path, true));
-	        // bw.write("S.no,Name,Fitness_Type,Price"); // table heading
-	        bw.write("class,"+"adfasdf----"+chooseClass+"----,tested filesssssssss"); // append the datat to csv file
-	        bw.close();
-			return false;
-		}
+		/*
+		 * public int deleteRow( String splitBy, String csvFile, int deleteLine) {
+		 * //String line = ""; String filepath="temp.csv"; File oldfile = new
+		 * File(csvFile); File tempfile= new File(filepath); try { FileWriter fw= new
+		 * FileWriter(tempfile,true); BufferedWriter bw= new BufferedWriter(fw);
+		 * PrintWriter pw= new PrintWriter(bw);
+		 * 
+		 * FileReader fr = new FileReader(csvFile); BufferedReader br= new
+		 * BufferedReader(fr); int line=0; String Currentline; while ((Currentline =
+		 * br.readLine()) != null) {
+		 * 
+		 * line++;
+		 * 
+		 * if (deleteLine != line) { pw.println(Currentline); } }
+		 * 
+		 * pw.flush(); pw.close(); fr.close(); br.close(); fw.close(); bw.close();
+		 * 
+		 * oldfile.delete(); File dump= new File(csvFile); tempfile.renameTo(dump);
+		 * 
+		 * System.out.println("deletion ends");
+		 * System.out.println("**********************"); return 1;
+		 * 
+		 * } catch(Exception e) { e.printStackTrace(); } return 0;
+		 * 
+		 * }
+		 */		
+		/*
+		 * public boolean putRecord(String path, String chooseClass) throws IOException
+		 * { BufferedWriter bw=new BufferedWriter(new FileWriter(path, true)); //
+		 * bw.write("S.no,Name,Fitness_Type,Price"); // table heading
+		 * bw.write("class,"+"adfasdf----"+chooseClass+"----,tested filesssssssss"); //
+		 * append the datat to csv file bw.close(); return false; }
+		 */
 		
 		public boolean updaterecord(String FitnessID, int count) {
 			String filepath="fittemp2.csv";
@@ -492,11 +480,11 @@ public class ModifyBooking {
 						
 						Currentline= FitID[0]+","+FitID[1]+","+ FitID[2]+ ","+
 								apnd+","+FitID[4]+","+FitID[5];
-						System.out.println("new vlaue--->>\n"+Currentline);
+						//System.out.println("new vlaue--->>\n"+Currentline);
 						pw.println(Currentline);
 						
 					}else {
-						System.out.println("else vlaue--->>"+Currentline);
+						//System.out.println("else vlaue--->>"+Currentline);
 						
 						pw.println(Currentline);						
 					}
@@ -513,13 +501,9 @@ public class ModifyBooking {
 				fw.close();
 				bw.close();
 				
-				//oldfile.delete(); File dump= new File(csvFile); tempfile.renameTo(dump);
 				oldfile.delete(); 
 				File dump= new File(timetable); 
 				tempfile.renameTo(dump);
-					  
-				System.out.println("update file ends");
-				System.out.println("**********************");
 			}
 			catch(Exception e ){
 				e.printStackTrace();
@@ -553,12 +537,12 @@ public class ModifyBooking {
 						// reconstruct line with attended status
 						Currentline= BookingData[0]+","+BookingData[1]+","+ BookingData[2]+ ","+
 									BookingData[3]+","+BookingData[4]+","+BookingData[5]+","
-									+"attended"+","+BookingData[7];
-						//System.out.println("new vlaue--->>\n"+Currentline);
+									+"attended"+","+BookingData[7]+","+BookingData[8];
+						System.out.println("new vlaue--->>\n"+Currentline);
 						pw.println(Currentline);
 						
 					}else {
-						//System.out.println("else vlaue--->>"+Currentline);
+						System.out.println("else vlaue--->>"+Currentline);
 						
 						pw.println(Currentline);						
 					}
@@ -615,7 +599,7 @@ public class ModifyBooking {
 						// reconstruct line with attended status
 						Currentline= BookingData[0]+","+BookingData[1]+","+ BookingData[2]+ ","+
 									BookingData[3]+","+BookingData[4]+","+BookingData[5]+","
-									+"modified"+","+BookingData[7];
+									+"modified"+","+BookingData[7]+","+BookingData[8];
 						System.out.println("new vlaue--->>\n"+Currentline);
 						pw.println(Currentline);
 						
@@ -678,7 +662,7 @@ public class ModifyBooking {
 						// reconstruct line with attended status
 						Currentline= BookingData[0]+","+BookingData[1]+","+ BookingData[2]+ ","+
 									BookingData[3]+","+BookingData[4]+","+BookingData[5]+","
-									+"Cancelled"+","+BookingData[7];
+									+"Cancelled"+","+BookingData[7]+","+BookingData[8];
 						System.out.println("new vlaue--->>\n"+Currentline);
 						pw.println(Currentline);
 						
@@ -688,9 +672,6 @@ public class ModifyBooking {
 						pw.println(Currentline);						
 					}
 					
-					/*
-					 * line++; if (deleteLine != line) { pw.println(Currentline); }
-					 */
 				}
 				
 				pw.flush();
@@ -700,7 +681,6 @@ public class ModifyBooking {
 				fw.close();
 				bw.close();
 				
-				//oldfile.delete(); File dump= new File(csvFile); tempfile.renameTo(dump);
 				oldfile.delete(); 
 				File dump= new File(custTable); 
 				tempfile.renameTo(dump);
@@ -720,9 +700,7 @@ public class ModifyBooking {
 		public boolean enrollCustomer(String CustomerID, String ClassID, int count, String enrollData) throws IOException {
 			String path="sample.csv";
 			BufferedWriter bw=new BufferedWriter(new FileWriter(path, true));
-	        // bw.write("S.no,Name,Fitness_Type,Price"); // table heading
-			// construct string with all values
-//			SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
+	        // construct string with all values
 			SimpleDateFormat dateFormat = new SimpleDateFormat("MddHHmms");
 			System.out.println(dateFormat.format(new Date()));
 		    String BookingID = String.valueOf(dateFormat.format(new Date()));
@@ -731,7 +709,8 @@ public class ModifyBooking {
 			//		22	2	1	Vooiking ID	342	3445	booked	
 			// BookingID+","+CustomerID + "," + ClassID + "," + timings + count + amount
 		    String []enrollDataArr= enrollData.split(",");
-			String append= BookingID +","+ CustomerID+","+ClassID +","+(enrollDataArr[1].replaceAll("pm", "")).replaceAll("am", "")+","+count + ","+enrollDataArr[2]+",booked,"+enrollDataArr[0]+"\n";
+			String append= BookingID +","+ CustomerID+","+ClassID +","+(enrollDataArr[1].replaceAll("pm", "")).replaceAll("am", "")+","+count + ","+enrollDataArr[2]+",booked,"+enrollDataArr[0]
+							+","+enrollDataArr[1]+"\n";
 			System.out.println("appned string is-->>>"+append);
 	        bw.write(append);
 			bw.close();
@@ -741,10 +720,8 @@ public class ModifyBooking {
 
 
 		public List<String> getMonthRecords(int month) {
-			// TODO Auto-generated method stub
 			List<String> recordsList= new ArrayList<String>();
-			System.out.println("avaiable bookings");
-//			String fileLocation="attendSession.csv";
+			
 			String fileLocation="attendSession.csv";
 			try (// show available bookings
 					BufferedReader br = new BufferedReader(new FileReader(fileLocation))) {

@@ -42,11 +42,17 @@ public class MonthlyReport {
 		}
 		List<String> monthRecords = csvoper.getMonthRecords(month);
 		List<String> uniFitness = new ArrayList<String>();
-		
+		System.out.println("---all months-");
+		for(String m:monthRecords) {
+			System.out.println(m);
+		}
+		System.out.println("fsdsdfsd");
 		//System.out.println("displaying particular month Data---->>>>");
 		//extract all fitness classes types and put it in separate list
 		for(String monthdata : monthRecords) {
-			uniFitness.add(monthdata.split(",")[1]);
+			uniFitness.add(monthdata.split(",")[1]
+					+"-"+monthdata.split(",")[8]
+					);
 		}
 		
 		//removing duplicates
@@ -63,11 +69,23 @@ public class MonthlyReport {
 		for (String a:uniFitness) {
 			fitnessMap.put(a.split(",")[0], "0,0,0");
 		}
-		
+		System.out.println("--check data--");
+		for(Entry<String, String> cp:fitnessMap.entrySet()) {
+			System.out.println(cp.getKey()+"\t\t"+cp.getValue());
+			/*
+			 * System.out.println(cp.getKey()+"\t\t"+cp.getValue().split(",")[0]+"\t\t\t" +
+			 * Integer.valueOf(cp.getValue().split(",")[1])/Integer.valueOf(cp.getValue().
+			 * split(",")[2])+"\t\t" +cp.getValue().split(",")[2]);
+			 */
+			
+		}
+		System.out.println("test----->>> end============>>>>><<<<");
+		// test start
 		for(String a:monthRecords) {
 			String fitness=a.split(",")[1];
+			String time= a.split(",")[8];
 			String []test = a.split(",");
-			String mapVal = fitnessMap.get(fitness);
+			String mapVal = fitnessMap.get(fitness+"-"+time);
 			
 			int amount  = Integer.valueOf(test[2])
 						+ Integer.valueOf(mapVal.split(",")[0]);
@@ -81,7 +99,7 @@ public class MonthlyReport {
 			String newValue= String.valueOf(amount)+","+String.valueOf(newrating)+","+String.valueOf(count);
 			//1,yoga,300,good,2,attended,3,1
 			//String replaceData = 
-			fitnessMap.replace(fitness, newValue);
+			fitnessMap.replace(fitness+"-"+time, newValue);
 		}
 		System.out.println("<<<<<<<--======Month Lesson Report======-->>>>>>>");
 		System.out.println("-----------------------------------------------------------------");
@@ -94,6 +112,47 @@ public class MonthlyReport {
 			
 		}
 		System.out.println("-----------------------------------------------------------------");
+		
+		
+		
+		//end aboev
+		//bbelow origingal data
+		
+		
+		/*
+		 * for(String a:monthRecords) { String fitness=a.split(",")[1]; String []test =
+		 * a.split(","); String mapVal = fitnessMap.get(fitness);
+		 * 
+		 * int amount = Integer.valueOf(test[2]) +
+		 * Integer.valueOf(mapVal.split(",")[0]);
+		 * 
+		 * int newrating= Integer.valueOf(test[4])*Integer.valueOf(test[7])
+		 * +Integer.valueOf(mapVal.split(",")[1]);
+		 * 
+		 * int count = Integer.valueOf(test[7]) +Integer.valueOf(mapVal.split(",")[2]);
+		 * 
+		 * String newValue=
+		 * String.valueOf(amount)+","+String.valueOf(newrating)+","+String.valueOf(count
+		 * ); //1,yoga,300,good,2,attended,3,1 //String replaceData =
+		 * fitnessMap.replace(fitness, newValue); }
+		 * System.out.println("<<<<<<<--======Month Lesson Report======-->>>>>>>");
+		 * System.out.println(
+		 * "-----------------------------------------------------------------");
+		 * System.out.
+		 * println("Fitness\t\tTotal Amount\tAverage rating\t   Total Strength");
+		 * System.out.println(
+		 * "-----------------------------------------------------------------");
+		 * for(Entry<String, String> cp:fitnessMap.entrySet()) {
+		 * System.out.println(cp.getKey()+"\t\t"+cp.getValue().split(",")[0]+"\t\t\t" +
+		 * Integer.valueOf(cp.getValue().split(",")[1])/Integer.valueOf(cp.getValue().
+		 * split(",")[2])+"\t\t" +cp.getValue().split(",")[2]);
+		 * 
+		 * } System.out.println(
+		 * "-----------------------------------------------------------------");
+		 */
+		
+		
+		
 		/**
 		 * for uniq lessons
 		 * 	list append-- rating,  count, amount
