@@ -1,5 +1,5 @@
 bookingID,CustomerID,classID,month,booking_count,amount,status,class name,time
-22,C001,1,3,342,3445,booked,yoga,11am
+22,C001,1,3,342,3445,Cancelled,yoga,11am
 1,C002,2,3,24,3445,modified,dance,11am
 33,C003,3,2,23,3445,attended,zumba,11am
 5,C004,4,2,4,3445,attended,boxing,11am
@@ -12,14 +12,14 @@ bookingID,CustomerID,classID,month,booking_count,amount,status,class name,time
 6,C011,11,9,23,3445,booked,zumba,11am
 11,C012,12,2,234,3445,booked,yoga,11am
 2.30E+11,C013,13,9,4,240,booked,karate,11am
-2.30312E+11,C001,15,2,5,340,booked,dsdfd7,11am
-2.30312E+11,C002,16,2,1,350,booked,dsdfd8,11am
+2.30312E+11,C001,15,2,5,340,Cancelled,dsdfd7,11am
+2.30312E+11,C002,16,2,1,350,Cancelled,dsdfd8,11am
 230312224550,C004,6,18,2,250,Cancelled,boxing,11am
 230312224557,C004,6,18,3,250,attended,boxing,11am
-230318101140,C009,17,8,1,360,booked,Yoga,11am
+230318101140,C009,17,8,1,360,modified,Yoga,11am
 404230642,C006,12,26,1,310,booked,Dance,11am
-404231849,C002,14,1,1,330,booked,GYM,11am
-404232035,C002,9,25,1,280,booked,Zumba,11am
+404231849,C002,14,1,1,330,Cancelled,GYM,11am
+404232035,C002,9,25,1,280,attended,Zumba,11am
 405192416,C003,9,25,4,280,attended,Zumba,11am
 40519443,C008,13,1,3,320,modified,Zumba,11am
 407090534,C005,12,26,4,310,attended,Dance,11am
@@ -28,4 +28,13 @@ bookingID,CustomerID,classID,month,booking_count,amount,status,class name,time
 41417045,C007,9,25,3,280,attended,Zumba,25am
 41417109,C007,14,1,1,330,attended,GYM,1pm
 414171232,C008,4,12,4,300,Cancelled,GYM,12pm
-414171723,C008,11,26,1,300,booked,karate,26am
+414171723,C008,11,26,1,300,Cancelled,karate,26am
+416200529,C009,13,1,1,320,attended,Zumba,1am
+417133322,C002,8,19,4,270,modified,Dance,19pm
+417133419,C002,11,26,1,300,Cancelled,karate,26am
+417134522,C003,7,19,4,260,attended,Yoga,19am
+417224747,C001,2,11,4,200,Cancelled,Dance,11pm
+417224931,C002,1,11,2,400,Cancelled,Yoga,11am
+417225239,C009,1,11,1,400,Cancelled,Yoga,11am
+417230150,C005,1,11,1,400,Cancelled,Yoga,11am
+418133552,C001,9,25,1,280,booked,Zumba,25am

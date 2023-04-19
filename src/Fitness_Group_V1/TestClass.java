@@ -6,8 +6,6 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import junit.framework.Assert;
-
 public class TestClass {
 
 	@Test
@@ -16,7 +14,7 @@ public class TestClass {
 		//fail("Not yet implemented");
 		MonthlyReport mr = new MonthlyReport();
 		
-		mr.monthLessonReport();
+		mr.monthLessonReport(3);
 		
 	}
 	
@@ -34,7 +32,7 @@ public class TestClass {
 		System.out.println("Testing Monthly Champion Report method");
 		MonthlyChampion mcr =new MonthlyChampion();
 		//C005 - 2 - zumba - 13 - 4
-		Boolean mr =mcr.monthlyChamReport();;
+		Boolean mr =mcr.monthlyChamReport(03);;
 		assertEquals(mr,true);
 	}
 	@Test
@@ -42,7 +40,7 @@ public class TestClass {
 		System.out.println("Testing Monthly Report method");
 		MonthlyChampion mcr =new MonthlyChampion();
 		//C005 - 2 - zumba - 13 - 4
-		Boolean mr =mcr.monthlyChamReport();;
+		Boolean mr =mcr.monthlyChamReport(03);;
 		assertEquals(mr,true);
 	}
 	@Test

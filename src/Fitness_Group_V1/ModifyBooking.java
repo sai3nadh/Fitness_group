@@ -19,18 +19,18 @@ public class ModifyBooking {
 	ModifyBooking(){
 		
 	}
-	String csvFile="sample.csv";
+	String csvFile="wfc_booking.csv";
 	Scanner sc= new Scanner(System.in);
 	
 	public boolean cancelBooking() throws IOException {
 		Scanner read= new Scanner(System.in);
-		System.out.println("Enter Customer ID");
-		String custID= read.next();
+		System.out.println("Enter Customer ID: (sample input: C001,C002,....C009,C010)");
+		String custID= read.next().toUpperCase();
 		CustomerInfo cinfo= new CustomerInfo();
-		System.out.println("is valid"+cinfo.isCustValid(custID));
+		//System.out.println("is valid"+cinfo.isCustValid(custID));
 		while(!cinfo.isCustValid(custID)) {
-			System.out.println("Enter Valid Customer ID");
-			custID= read.next();
+			System.out.println("Enter Valid Customer ID: (sample input: C001,C002,....C009,C010)");
+			custID= read.next().toUpperCase();
 			System.out.println("is valid"+cinfo.isCustValid(custID));
 
 		}
@@ -53,8 +53,7 @@ public class ModifyBooking {
 					int count = 0;
 					for (String add : testList)
 					{
-						//System.out.println(add);
-						// 
+						 
 						if(add.split(",")[6].equals("booked")) {
 							System.out.println(add.split(",")[0]+"\t"+
 												add.split(",")[7]+"\t"+
@@ -72,7 +71,8 @@ public class ModifyBooking {
 					}
 					System.out.println("enter Fitness ID ");
 					String cancel_id=sc.next();
-					
+					count=0;
+					String class_id="";
 					// to get the existing count 
 					for (String add : testList)
 					{
@@ -80,18 +80,17 @@ public class ModifyBooking {
 						// 
 						if(add.split(",")[0].equals(cancel_id)) {
 							count = -Integer.valueOf( add.split(",")[4]);
+							class_id = add.split(",")[2];
 							break;
 						}
 					}
-					System.out.println("count value is -->"+count);
-					count = 5+count;
-					System.out.println("count value is -->"+count);
+					
 					
 					boolean cancel=csvoper.updateCancelStatus(cancel_id);
 					if(cancel) {
 						//update count in fitness classes
 						
-						csvoper.updaterecord(cancel_id, count);
+						csvoper.updaterecord(class_id, count);
 						System.out.println("Cancellation Successful");
 					}
 					else {
@@ -137,13 +136,13 @@ public class ModifyBooking {
 		System.out.println("**********************");
 //		System.out.println("please enter customerID");
 		Scanner read = new Scanner(System.in);
-		System.out.println("Enter Customer ID");
-		String custID= read.next();
+		System.out.println("Enter Customer ID: (sample input: C001,C002,....C009,C010)");
+		String custID= read.next().toUpperCase();
 		CustomerInfo cinfo= new CustomerInfo();
 		System.out.println("is valid"+cinfo.isCustValid(custID));
 		while(!cinfo.isCustValid(custID)) {
-			System.out.println("Enter Valid Customer ID");
-			custID= read.next();
+			System.out.println("Enter Valid Customer ID: (sample input: C001,C002,....C009,C010)");
+			custID= read.next().toUpperCase();
 			System.out.println("is valid"+cinfo.isCustValid(custID));
 
 		}
@@ -155,7 +154,8 @@ public class ModifyBooking {
 		System.out.println("available sessions on customer booking");
 		System.out.println("------------------------------------------");
 		System.out.println("fitID\t\t type\t status");
-		System.out.println("------------------------------------------");		
+		System.out.println("------------------------------------------");
+		int cont=0;
 		for (String add : testList)
 		{
 			
@@ -163,7 +163,12 @@ public class ModifyBooking {
 				System.out.println(add.split(",")[0]+"\t"+
 									add.split(",")[7]+"\t"+
 									add.split(",")[6]);
+				cont++;
 			}
+		}
+		if(cont==0) {
+			System.out.println("You don't have any bookings");
+			return false;
 		}
 		System.out.println("------------------------------------------");
 		// take  user input --> class id
@@ -201,13 +206,14 @@ public class ModifyBooking {
 			}
 		
 		}
-		
-		int count=1;
+		String cname = record.split(",")[1];
+		System.out.println("enter number of attendees");
+		int count=sc.nextInt();
 		//update timetable
 		//validate if it has count to 5
 		int enroll_count= csvoper.getEnrollCount(chooseClass);
 		//validate if he is already enrolled in same class
-		if (csvoper.isEnrolled(chooseClass, customerID)) {
+		if (csvoper.isEnrolled(chooseClass, customerID,cname)) {
 			System.out.println("Alread you enrolled for this class..");
 			return false;
 		}
@@ -215,11 +221,11 @@ public class ModifyBooking {
 			System.out.println("Not Enrolleddd");
 			// so we r enrolling
 			if(enroll_count<5) {
-				System.out.println("update time table.. with count value increased by one");
-				System.out.println(chooseClass+"choo"+count);
+				//System.out.println("update time table.. with count value increased by one");
+				//System.out.println(chooseClass+"choo"+count);
 				csvoper.updaterecord(chooseClass,count);// increment  the time table csv file count value
-				csvoper.updaterecord(chooseClass,-1);// increment  the time table csv file count value
-				System.out.println("update modify status");
+				//csvoper.updaterecord(chooseClass,-1);// increment  the time table csv file count value
+				//System.out.println("update modify status");
 				csvoper.updateModifyStatus(String.valueOf(change_id));
 				//1,Yoga,11am,1,400,3/11/2023===> Yoga,11am,400
 				String enrollData=record.split(",")[1]+","+record.split(",")[2]+","+record.split(",")[4]+","+record.split(",")[5];
@@ -239,7 +245,7 @@ public class ModifyBooking {
 		public List<String> getRecords(String custID, String splitBy, String fileLocation) {
 			
 			List<String> recordsList= new ArrayList<String>();
-			//System.out.println("avaiable bookings");
+			
 			try (// show available bookings
 					BufferedReader br = new BufferedReader(new FileReader(fileLocation))) {
 					String line;
@@ -248,7 +254,7 @@ public class ModifyBooking {
 						if(Prices.length>0) { // to skip the empty record
 							if(custID.equals(Prices[1])) {
 								recordsList.add(line);
-								//System.out.println(" " + Prices[0] + "\t\t" + Prices[1] +"count value");//+count); 
+								 
 							}
 						}
 					}
@@ -262,9 +268,9 @@ public class ModifyBooking {
 		public boolean attendSession(String bookingID, String bookingData) throws IOException {
 			String path="attendSession.csv";
 			BufferedWriter bw=new BufferedWriter(new FileWriter(path, true));
-	       System.out.println("bookingdata is "+bookingData); 
+	        
 		    String []enrollDataArr= bookingData.split(",");
-		    System.out.println("booking data is :" +bookingData);
+		    
 			String append= bookingID +","+enrollDataArr[0]+","
 							+enrollDataArr[1]+","+enrollDataArr[2]+","
 							+enrollDataArr[3]+","+enrollDataArr[4]+","
@@ -274,22 +280,24 @@ public class ModifyBooking {
 									
 			//BookingID	class_name	amount	review	rating	status
 
-			//System.out.println("appned string is-->>>"+append);
 	        bw.write(append);
 			bw.close();
 			
 			return false;			
 		}
 		
-		public boolean isEnrolled(String FitnessID, String CustomerID) {
-			String fileLocation  = "sample.csv";//"fitness_classes.csv";;
+		public boolean isEnrolled(String FitnessID, String CustomerID,String className) {
+			String fileLocation  = "wfc_booking.csv";//"fitness_classes.csv";;
 			System.out.println("avaiable bookings");
 			try (
 					BufferedReader br = new BufferedReader(new FileReader(fileLocation))) {
 					String line,FitID[];
 					while ((line = br.readLine()) != null) {   //returns a Boolean value  
 						FitID=line.split(",");
-						if (FitID[2].equals(FitnessID) && FitID[1].equals(CustomerID)) {
+						if ((FitID[2].equals(FitnessID) && FitID[1].equals(CustomerID))||
+								(FitID[7].equals(className) && FitID[1].equals(CustomerID)))
+						
+						{
 						return true;// returns true if user is already enrolled in class
 						}	
 					}
@@ -376,11 +384,9 @@ public class ModifyBooking {
 					BufferedReader br = new BufferedReader(new FileReader(fileLocation))) {
 					String line;
 					while ((line = br.readLine()) != null) {   //returns a Boolean value  
-						/*
-						 * // append all records to list recordsList.add(line);
-						 */
+						
 						String checkMonth= line.split(",")[5];
-//						System.out.println("compare months:"+checkMonth+"-"+Month);
+
 						if(checkMonth.equals(Month)) {
 							// append all records to list
 							recordsList.add(line);
@@ -517,7 +523,7 @@ public class ModifyBooking {
 		public boolean updateAttendStatus(String BookingID) {
 			String filepath="custTblTemp.csv";
 			//timetable path to update booking count
-			String custTable = "sample.csv"; //"fitness_classes.csv";
+			String custTable = "wfc_booking.csv"; //"fitness_classes.csv";
 			File oldfile = new File(custTable);
 			File tempfile= new File(filepath);
 			try {
@@ -538,18 +544,15 @@ public class ModifyBooking {
 						Currentline= BookingData[0]+","+BookingData[1]+","+ BookingData[2]+ ","+
 									BookingData[3]+","+BookingData[4]+","+BookingData[5]+","
 									+"attended"+","+BookingData[7]+","+BookingData[8];
-						System.out.println("new vlaue--->>\n"+Currentline);
+						
 						pw.println(Currentline);
 						
 					}else {
-						System.out.println("else vlaue--->>"+Currentline);
 						
 						pw.println(Currentline);						
 					}
 					
-					/*
-					 * line++; if (deleteLine != line) { pw.println(Currentline); }
-					 */
+					
 				}
 				
 				pw.flush();
@@ -559,7 +562,6 @@ public class ModifyBooking {
 				fw.close();
 				bw.close();
 				
-				//oldfile.delete(); File dump= new File(csvFile); tempfile.renameTo(dump);
 				oldfile.delete(); 
 				File dump= new File(custTable); 
 				tempfile.renameTo(dump);
@@ -579,7 +581,7 @@ public class ModifyBooking {
 		public boolean updateModifyStatus(String BookingID) {
 			String filepath="custTblTemp.csv";
 			//timetable path to update booking count
-			String custTable = "sample.csv"; //"fitness_classes.csv";
+			String custTable = "wfc_booking.csv"; //"fitness_classes.csv";
 			File oldfile = new File(custTable);
 			File tempfile= new File(filepath);
 			try {
@@ -599,19 +601,15 @@ public class ModifyBooking {
 						// reconstruct line with attended status
 						Currentline= BookingData[0]+","+BookingData[1]+","+ BookingData[2]+ ","+
 									BookingData[3]+","+BookingData[4]+","+BookingData[5]+","
-									+"modified"+","+BookingData[7]+","+BookingData[8];
-						System.out.println("new vlaue--->>\n"+Currentline);
+									+"changed"+","+BookingData[7]+","+BookingData[8];
+						
 						pw.println(Currentline);
 						
 					}else {
-						System.out.println("else vlaue--->>"+Currentline);
 						
 						pw.println(Currentline);						
 					}
 					
-					/*
-					 * line++; if (deleteLine != line) { pw.println(Currentline); }
-					 */
 				}
 				
 				pw.flush();
@@ -621,7 +619,6 @@ public class ModifyBooking {
 				fw.close();
 				bw.close();
 				
-				//oldfile.delete(); File dump= new File(csvFile); tempfile.renameTo(dump);
 				oldfile.delete(); 
 				File dump= new File(custTable); 
 				tempfile.renameTo(dump);
@@ -642,7 +639,7 @@ public class ModifyBooking {
 		public boolean updateCancelStatus(String BookingID) {
 			String filepath="custTblTemp.csv";
 			//timetable path to update booking count
-			String custTable = "sample.csv"; //"fitness_classes.csv";
+			String custTable = "wfc_booking.csv"; //"fitness_classes.csv";
 			File oldfile = new File(custTable);
 			File tempfile= new File(filepath);
 			try {
@@ -663,11 +660,11 @@ public class ModifyBooking {
 						Currentline= BookingData[0]+","+BookingData[1]+","+ BookingData[2]+ ","+
 									BookingData[3]+","+BookingData[4]+","+BookingData[5]+","
 									+"Cancelled"+","+BookingData[7]+","+BookingData[8];
-						System.out.println("new vlaue--->>\n"+Currentline);
+
 						pw.println(Currentline);
 						
 					}else {
-						System.out.println("else vlaue--->>"+Currentline);
+						//System.out.println("else vlaue--->>"+Currentline);
 						
 						pw.println(Currentline);						
 					}
@@ -698,7 +695,7 @@ public class ModifyBooking {
 		}
 
 		public boolean enrollCustomer(String CustomerID, String ClassID, int count, String enrollData) throws IOException {
-			String path="sample.csv";
+			String path="wfc_booking.csv";
 			BufferedWriter bw=new BufferedWriter(new FileWriter(path, true));
 	        // construct string with all values
 			SimpleDateFormat dateFormat = new SimpleDateFormat("MddHHmms");
@@ -711,7 +708,7 @@ public class ModifyBooking {
 		    String []enrollDataArr= enrollData.split(",");
 			String append= BookingID +","+ CustomerID+","+ClassID +","+(enrollDataArr[1].replaceAll("pm", "")).replaceAll("am", "")+","+count + ","+enrollDataArr[2]+",booked,"+enrollDataArr[0]
 							+","+enrollDataArr[1]+"\n";
-			System.out.println("appned string is-->>>"+append);
+			
 	        bw.write(append);
 			bw.close();
 			return true;

@@ -4,24 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.Map.Entry;
 
 public class MonthlyChampion {
 	
-	public boolean monthlyChamReport()  {
+	public boolean monthlyChamReport(int month)  {
 	CSVOperatins csvoper = new CSVOperatins();
 		
-		//read input from user-- (month)
-		Scanner sc = new Scanner(System.in);
-		System.out.println("enter month(range: 1 to 12)");
-		int month = sc.nextInt();
-		while (month<1 || month>12) {
-			System.out.println("enter valid month(range: 1 to 12)");
-			month = sc.nextInt();
-		}
-	
+		
 		List<String> monthRecords = csvoper.getMonthRecords(month);
 		List<String> uniFitness = new ArrayList<String>();
 		

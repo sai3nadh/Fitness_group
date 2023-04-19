@@ -18,21 +18,25 @@ public class AttendSession {
 		 * write it to attend csv file
 		 * 
 		 */
+		String csvFile="wfc_booking.csv";
+		String BookingID,review;
+		int Rating;
+		String compare[],custDataArr[]=null;
+		String customerID;
 		Scanner sc = new Scanner(System.in);	
-		System.out.println("Enter Customer ID");
-		String custID= sc.next();
+		System.out.println("Enter Customer ID (sample input: C001,C002,....C009,C010)");
+		String custID= sc.next().toUpperCase();
 		CustomerInfo cinfo= new CustomerInfo();
-		System.out.println("is valid"+cinfo.isCustValid(custID));
+		//System.out.println("is valid"+cinfo.isCustValid(custID));
 		while(!cinfo.isCustValid(custID)) {
-			System.out.println("Enter Valid Customer ID");
-			custID= sc.next();
+			System.out.println("Enter Valid Customer ID(sample input: C001,C002,....C009,C010)");
+			custID= sc.next().toUpperCase();
 			System.out.println("is valid"+cinfo.isCustValid(custID));
 
 		}
-		String csvFile="sample.csv";
+		customerID= custID;
 		
-		//System.out.println("enter Customer ID");
-		String customerID= custID;//sc.next();
+		
 		System.out.println("Avaiable bookings");
 		
 		System.out.println("**********************");
@@ -47,7 +51,7 @@ public class AttendSession {
 		{
 
 			if(custData.split(",")[6].equals("booked")) {
-				System.out.println("custData Values values"+custData);
+				//System.out.println("custData Values values"+custData);
 				System.out.println(custData.split(",")[0]+"\t\t"+custData.split(",")[7]);
 				count++;
 			}
@@ -59,11 +63,10 @@ public class AttendSession {
 			return false;
 		}
 		System.out.println("Enter Booking ID of class to attend");
-		String BookingID = sc.next();
-		String compare[],custDataArr[]=null;
+		BookingID = sc.next();
+		
 		for (String custData : testList)
 		{
-			System.out.println("custtttdataa"+custData);
 			compare= custData.split(",");
 			if (compare[0].equals(BookingID)) {
 				custDataArr=custData.split(",");
@@ -72,15 +75,17 @@ public class AttendSession {
 		}
 
 		System.out.println("enter Session Rating rangin 1 - 5");
-		int Rating = sc.nextInt();
+		Rating = sc.nextInt();
+		 while (Rating < 1 || Rating > 5) {
+			  System.out.println("enter valid Rating (range between: 1 to 5)"); 
+			  Rating = sc.nextInt(); 
+		  }
 		System.out.println("enter review for the session");
-		String review = "";//sc.next();
+		review = "";//sc.next();
 		review = sc.nextLine();
 		review = review +""+sc.nextLine();
 			
-		System.out.println("string review-->"+review);
-		int a = sc.nextInt();
-		System.out.println("review is"+review);
+
 		 //booking_ID, review , amount, class name, month
 		String attendData = String.valueOf(Rating)+"," +review+","+
 		 custDataArr[0]+","+custDataArr[1]+","+custDataArr[2]+","
@@ -90,9 +95,6 @@ public class AttendSession {
 						+","+custDataArr[3]+","+custDataArr[4]+","+custDataArr[8];
 		
 
-		System.out.println("attend data string:"+attendData);
-		System.out.println("pauseeee");
-		a= sc.nextInt();
 		try {
 			csvoper.updateAttendStatus(BookingID);
 			csvoper.attendSession(BookingID, attendData);

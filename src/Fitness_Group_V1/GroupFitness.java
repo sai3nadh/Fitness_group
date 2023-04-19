@@ -1,9 +1,5 @@
 package fitness_Group_V1;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Scanner;
 public class GroupFitness {
 
@@ -15,7 +11,8 @@ public class GroupFitness {
 		MonthlyReport mr = new MonthlyReport();
 		MonthlyChampion mcr= new MonthlyChampion();
 		try (Scanner operation = new Scanner(System.in)) {
-			
+			System.out.println("*******************************************");
+			System.out.println("\tWeekend Fitness Club");
 			
 			// the main functionalities 
 			System.out.println("*******************************************");
@@ -26,13 +23,12 @@ public class GroupFitness {
 			System.out.println("5) Monthly Chapion Fitness Report ");
 			System.out.println("6 Exit System");
 			System.out.println("*******************************************");
-			System.out.println(" Choose the operation to perform ");
-
+			
 			System.out.println(" Choose the operation to perform ");
 			System.out.println("ENter Operation ID:");
 			// read the operation to perform  
 			int option = operation.nextInt();
-			System.out.println("you have choosen "+option);
+			
 			while (option!=6) {
 				switch (option) {
 				case 1: 
@@ -46,28 +42,41 @@ public class GroupFitness {
 					int op = operation.nextInt();
 					if(op==1) {
 						mb.changeBooking();
-					}//skipping cancel for testing purpose
+					}
 					else if(op==2) {
 						mb.cancelBooking();
 					}
 					break;
 				case 3: 
-					System.out.println("call Attend a Lession");
 					as.attendASession();
 					break;
 				case 4: 
-					System.out.println("call Monthly Lession Report");
-					mr.monthLessonReport();
+					
+					  System.out.println("enter month"); 
+					  int month = operation.nextInt(); 
+					  while (month < 1 || month > 12) {
+						  System.out.println("enter valid month (range between: 1 to 12)"); 
+						  month = operation.nextInt(); 
+					  }
+					 
+					mr.monthLessonReport(month);
 					break;
 				case 5: 
-					System.out.println("call Monthly Chapion Fitness Report");
-					mcr.monthlyChamReport();
+					//System.out.println("call Monthly Champion Fitness Report");
+					System.out.println("enter month(range between: 1 to 12)"); 
+					   month = operation.nextInt(); 
+					  while (month < 1 || month > 12) {
+						  System.out.println("enter valid month (range between: 1 to 12)"); 
+						  month = operation.nextInt(); 
+					  }
+					mcr.monthlyChamReport(month);
 					break;
 				case 6: System.out.println("exit system");
 				break;
 				}
 				if (option!=6) {
-					System.out.println("entered to main menu please choose option");
+					System.out.println("*******************************************");
+					System.out.println("Entered to main menu please choose option");
 					System.out.println("*******************************************");
 					System.out.println("1) Book a Group Session ");
 					System.out.println("2) Change / Cancel a Session ");
