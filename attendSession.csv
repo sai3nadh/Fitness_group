@@ -1,30 +1,9 @@
 BookingID,class_name,amount,review,rating,status,month,count,time
-1,yoga,300,good,2,attended,3,1,11am
-33,dance,310,good,3,attended,3,1,11am
-5,zumba,320,good,4,attended,3,1,11am
-8,boxing,330,good,5,attended,3,1,11am
-44,swimming,340,good,6,attended,4,1,11am
-3,kungfu,350,good,7,attended,4,1,11am
-1,running,360,good,8,attended,12,4,11am
-3,yoga,370,good,9,attended,4,1,11am
-3,dance,380,good,10,attended,11,1,11am
-8,swimming,3445,afsdf,3,attended,2,1,11am
-8,swimming,3445,hhhh,2,attended,1,1,11am
-234,yoga,3445,goodd,4,attended,2,1,11am
-8,swimming,3445,tfuy,4,attended,1,1,11am
-23,yoga,300,good,2,attended,3,1,11am
-2524,dance,310,good,3,attended,3,1,11am
-42,zumba,320,good,4,attended,3,1,25am
-1313,boxing,330,good,5,attended,3,1,11pm
-33,zumba,3445,good,5,attended,3,4,11am
-3,running,3445,goood,5,attended,7,1,11am
-5,boxing,3445,good,4,attended,2,4,11am
-230312224557,boxing,250,good,4,attended,18,3,11am
-405192416,Zumba,280,enjoyed,1,attended,25,4,11am
-407090534,Dance,310,good enjoued looking for more,1,booked,26,4,11am
-414164817,Dance,310,dfafae,4,attended,26,1,26pm
-41417045,Zumba,280,good session,5,attended,25,3,25am
-41417109,GYM,330,not ok,5,attended,1,1,1pm
-417134522,Yoga,260,good dsfsd afew,4,attended,19,4,19am
-416200529,Zumba,320,asdf aasd fsdf sad f,5,attended,1,1,1am
-404232035,Zumba,280,good session,5,attended,25,1,11am
+419232226,Yoga,350,good session.. Enjoyed!!!,5,attended,3,4,19am
+419232640,Dance,200,good session,4,attended,3,1,19pm
+419233516,boxing,330,good session,5,attended,3,4,18pm
+420095314,Dance,200,Attended the session. Enjoyed it!!,5,attended,3,1,11pm
+420095427,Spin,400,It's really enjoying!!,5,attended,4,4,9pm
+420100125,Spin,400,its worthy!!,3,attended,4,1,8pm
+420160926,Dance,200,Didn't really enjoyed the session,2,attended,3,1,26pm
+420170139,karate,240,good session!!,5,attended,3,4,26am
