@@ -80,16 +80,16 @@ public class MonthlyChampion {
 		 
 		int Rank=1;
 		System.out.println("<<<<<<<--======Monthly Champion Report======-->>>>>>>");
-		System.out.println("-----------------------------------------------------------------");
+		System.out.println("---------------------------------------------------------------------------");
 		System.out.println("Rank\tFitness\t\tTotal Amount\tAverage rating\t   Total Strength");
-		System.out.println("-----------------------------------------------------------------");
+		System.out.println("---------------------------------------------------------------------------");
 		for( String a :newlis2t) {
 			System.out.println(Rank+"\t"+a.split(",")[0]+"\t\t"+a.split(",")[1]+"\t\t\t"
 					+ Integer.valueOf(a.split(",")[2])/Integer.valueOf(a.split(",")[3])+"\t\t"
 					+a.split(",")[3]);
 			Rank++;
 		}
-		System.out.println("-----------------------------------------------------------------");
+		System.out.println("---------------------------------------------------------------------------");
 		
 		return true;
 		/**

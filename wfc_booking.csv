@@ -7,7 +7,20 @@ bookingID,CustomerID,classID,month,booking_count,amount,status,class name,time
 420095427,C008,20,4,4,400,attended,Spin,9pm
 420100125,C001,18,4,1,400,attended,Spin,8pm
 420101548,C003,31,4,4,260,Cancelled,Aquacise,30am
-420160513,C008,25,4,4,350,booked,Yoga,22am
+420160513,C008,25,4,4,350,Cancelled,Yoga,22am
 420160926,C012,12,3,1,200,attended,Dance,26pm
 420170139,C015,11,3,4,240,attended,karate,26am
 420170631,C013,30,4,5,100,booked,Zumba,29pm
+420172241,C003,18,4,1,400,Cancelled,Spin,8pm
+420172921,C009,9,3,1,100,changed,Zumba,25am
+420173052,C009,2,3,1,200,changed,Dance,11pm
+42017507,C011,20,4,1,400,attended,Spin,9pm
+420175840,C009,29,4,1,300,attended,Box Fit,29am
+420180045,C008,31,4,1,260,attended,Aquacise,30am
+420192727,C006,9,3,1,100,booked,Zumba,25am
+420192750,C009,15,4,1,240,Cancelled,karate,2am
+420204616,C014,13,4,1,100,booked,Zumba,1am
+42021277,C009,21,4,1,260,booked,Aquacise,15am
+42022211,C002,10,3,1,220,booked,GYM,25pm
+420222145,C001,10,3,1,220,booked,GYM,25pm
+420222211,C003,14,4,4,220,booked,GYM,1pm

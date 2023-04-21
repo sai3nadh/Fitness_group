@@ -52,7 +52,7 @@ public class GroupFitness {
 					break;
 				case 4: 
 					
-					  System.out.println("enter month"); 
+					  System.out.println("enter month  (range between: 1 to 12)"); 
 					  int month = operation.nextInt(); 
 					  while (month < 1 || month > 12) {
 						  System.out.println("enter valid month (range between: 1 to 12)"); 

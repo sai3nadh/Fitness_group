@@ -187,11 +187,22 @@ public class ModifyBooking {
 		// show available sessions to change booking-- new class
 		String classesCSVFile="fitness_classes.csv";
 		List<String> ClassesList = csvoper.getClassRecords(",", classesCSVFile);
-		System.out.println("\n\nAvailable Classess sessions on customer booking");
+		System.out.println("\nAvailable Classess sessions on customer booking");
+		System.out.println("----------------------------------------------------------------");
+		System.out.println("Fitness_ID\tFitness_type\tprice\tDate");
+		System.out.println("----------------------------------------------------------------");
+		int header=0;
 		for (String clist : ClassesList)
 		{
-			System.out.println(clist);
+			if(header==1) {
+			System.out.println(clist.split(",")[0]+"\t\t"
+					+clist.split(",")[1]+"\t\t"
+					+clist.split(",")[4]+"\t"
+					+clist.split(",")[5]);
+			}
+			header=1;
 		}
+		System.out.println("----------------------------------------------------------------");
 		// ask for customer to choose class
 		System.out.println("enter your classID to join");
 		String chooseClass= sc.next();
@@ -218,7 +229,7 @@ public class ModifyBooking {
 			return false;
 		}
 		else {
-			System.out.println("Not Enrolleddd");
+			//System.out.println("Not Enrolleddd");
 			// so we r enrolling
 			if(enroll_count<5) {
 				//System.out.println("update time table.. with count value increased by one");

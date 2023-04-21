@@ -8,10 +8,11 @@ public class AttendSessionTest {
 
 	@Test
 	public void attendTest() {
+		System.out.println("Testing Attend Session method");
 		AttendSession as = new AttendSession();
 		Boolean attend=as.attendASession();
 		assertEquals(attend, true);
-		//fail("Not yet implemented");
+		
 	}
 
 }
